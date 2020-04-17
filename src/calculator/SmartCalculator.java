@@ -28,7 +28,7 @@ public class SmartCalculator {
          */
         String result = null;
 
-        String left; // variable to the left of operator
+        String left; // variable or value to the left of operator
         String right; // variable or value to the right of operator
         // In a + b; a is left, b is right
 
@@ -37,7 +37,7 @@ public class SmartCalculator {
             // then 'left' is 'a' + 'b' stored in 'result' in previous iteration
 
             if (i == 1) {
-                left = getValue(array[i - 1]);
+                left = getValue(array[0]);
             } else {
                 left = result;
             }
@@ -76,7 +76,7 @@ public class SmartCalculator {
 
         // A variable name can only be in alphabets
         if (!variable.matches("[a-zA-Z]+")) {
-           return INVALID_IDENTIFIER;
+            return INVALID_IDENTIFIER;
         }
 
         //if right(assigned value) is valid but it does not exist in our map, then output is "Unknown variable"
@@ -110,8 +110,7 @@ public class SmartCalculator {
             return String.valueOf(variablesAndValues.get(s));
         } else {
             try { // checking if it is an Integer number
-                Integer.parseInt(s);
-                return s;
+                return String.valueOf(Integer.parseInt(s));
             } catch (NumberFormatException e) {
                 return null;
             }
@@ -123,11 +122,18 @@ public class SmartCalculator {
          * e.g. inputExpression = a + b - c
          * returnArray = { a, +, b, -, c }
          */
-        inputExpression = inputExpression.replaceAll("\\+", "£+£");
-        inputExpression = inputExpression.replaceAll("-", "£-£");
-        inputExpression = inputExpression.replaceAll("=", "£=£");
         inputExpression = inputExpression.replaceAll("\\s+", "");
-        return inputExpression.split("£");
+        return inputExpression.split("(?<=[+\\-=])|(?=[+\\-=])");
     }
 }
+
+
+
+
+
+
+
+
+
+
 
